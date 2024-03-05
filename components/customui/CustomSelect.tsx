@@ -11,11 +11,11 @@ import {
 import { Label } from '@/components/ui/label'
 import { Fragment } from 'react'
 
-type SelectItems = { placeholder: string; label: string; categories: string[] }
+type SelectItems = { placeholder: string; label: string; items: string[] }
 type SelectGroup = {
   placeholder: string
   label: string
-  categories: Record<string, string[]>[]
+  items: Record<string, string[]>[]
 }
 type CustomSelectProps = (SelectItems | SelectGroup) & {
   onChange: (value: string) => void
@@ -24,11 +24,14 @@ type CustomSelectProps = (SelectItems | SelectGroup) & {
 const CustomSelect = ({
   label,
   placeholder,
-  categories,
+  items,
   onChange,
 }: CustomSelectProps) => {
-  const renderCategories = () => {
-    return categories.map((c) => {
+  const renderItems = () => {
+    return items.map((c) => {
+      if (typeof c === 'string') {
+        return <SelectItem value={c as string}>{c as string}</SelectItem>
+      }
       const key = Object.keys(c)[0]
       return (
         <SelectGroup key={nanoid()}>
@@ -51,7 +54,7 @@ const CustomSelect = ({
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>{renderCategories()}</SelectContent>
+        <SelectContent>{renderItems()}</SelectContent>
       </Select>
     </Fragment>
   )
