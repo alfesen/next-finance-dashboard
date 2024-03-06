@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .input-box {
+    @apply flex gap-1 flex-col;
+  }
+
+  .input-box .input-label {
+    @apply text-base ml-1 font-semibold;
+  }
+
+  .add-form {
+    @apply grid w-full items-center gap-4;
+  }
+
+  .number-input {
+    @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none;
+  }
+}
