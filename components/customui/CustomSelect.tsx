@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { Fragment } from 'react'
+import { capitalize } from 'string-ts'
 
 type SelectItems = { placeholder: string; label: string; items: string[] }
 type SelectGroup = {
@@ -30,12 +30,16 @@ const CustomSelect = ({
   const renderItems = () => {
     return items.map((c) => {
       if (typeof c === 'string') {
-        return <SelectItem value={c as string}>{c as string}</SelectItem>
+        return (
+          <SelectItem key={nanoid()} value={c as string}>
+            {c as string}
+          </SelectItem>
+        )
       }
       const key = Object.keys(c)[0]
       return (
         <SelectGroup key={nanoid()}>
-          <SelectLabel>{key}</SelectLabel>
+          <SelectLabel className='text-lg'>{capitalize(key)}</SelectLabel>
           {(c as Record<string, string[]>)[key].map((i) => {
             return (
               <SelectItem key={nanoid()} value={i}>
@@ -48,15 +52,15 @@ const CustomSelect = ({
     })
   }
   return (
-    <Fragment>
-      <Label>{label}</Label>
+    <div className='input-box'>
+      <Label className='input-label'>{label}</Label>
       <Select onValueChange={onChange}>
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>{renderItems()}</SelectContent>
       </Select>
-    </Fragment>
+    </div>
   )
 }
 
