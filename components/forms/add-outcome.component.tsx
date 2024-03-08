@@ -1,18 +1,10 @@
-import { useId } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import CustomSelect from '@/components/customui/CustomSelect'
-import { Form, FormField, FormItem } from '../ui/form'
-import { usePostData } from '@/hooks/usePostData'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import CustomSelect from '@/components/customui/custom-select.component'
+import { Form, FormField } from '../ui/form'
+import { usePostData } from '@/hooks/use-post-data.hook'
 import { z } from 'zod'
+import CustomFormFieldInput from '../customui/custom-form-field-input.component'
 
 const outcomeCategories: Record<string, string[]>[] = [
   { children: ['Kids', 'Pets'] },
@@ -41,9 +33,6 @@ const AddOutcome = ({ className }: { className: string }) => {
     'outcome'
   )
 
-  const outcomeDescriptionId = useId()
-  const outcomeAmountId = useId()
-
   return (
     <Card className={className}>
       <CardHeader>
@@ -53,48 +42,18 @@ const AddOutcome = ({ className }: { className: string }) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
             <div className='flex gap-2'>
-              <FormField
+              <CustomFormFieldInput
                 name='expense'
                 control={form.control}
-                render={({ field }) => {
-                  return (
-                    <FormItem className='input-box'>
-                      <Label
-                        htmlFor={outcomeDescriptionId}
-                        className='input-label'
-                      >
-                        Outcome Description
-                      </Label>
-                      <Input
-                        required
-                        {...field}
-                        id={outcomeDescriptionId}
-                        placeholder='Enter Descriptions'
-                      />
-                    </FormItem>
-                  )
-                }}
+                placeholder='Enter expense description'
+                label='Expense'
               />
-              <FormField
+              <CustomFormFieldInput
+                type='number'
                 name='amount'
                 control={form.control}
-                render={({ field }) => {
-                  return (
-                    <FormItem className='input-box'>
-                      <Label htmlFor={outcomeAmountId} className='input-label'>
-                        Amount
-                      </Label>
-                      <Input
-                        required
-                        id={outcomeAmountId}
-                        type='number'
-                        {...field}
-                        placeholder='Enter Amount'
-                        className='number-input'
-                      />
-                    </FormItem>
-                  )
-                }}
+                placeholder='Enter amount'
+                label='Amount'
               />
             </div>
             <FormField
