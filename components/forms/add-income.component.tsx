@@ -12,9 +12,7 @@ import {
 import CustomSelect from '@/components/customui/CustomSelect'
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
+import { usePostData } from '@/hooks/usePostData'
 
 const categories: string[] = ['Bank Transaction', 'Cash', 'Gift']
 
@@ -25,26 +23,18 @@ const incomeSchema = z.object({
 })
 
 const AddIncome = ({ className }: { className: string }) => {
-  const form = useForm<z.infer<typeof incomeSchema>>({
-    resolver: zodResolver(incomeSchema),
-    defaultValues: {
+  const { form, onSubmit } = usePostData(
+    incomeSchema,
+    {
       invoice: '',
       amount: 0,
       method: '',
     },
-  })
+    'income'
+  )
 
   const incomeInvoiceId = useId()
   const incomeAmountId = useId()
-
-  const onSubmit = async (values: z.infer<typeof incomeSchema>) => {
-    await axios.post('/api/income', JSON.stringify(values), {
-      method: 'Post',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    form.reset()
-    form.setValue('method', '')
-  }
 
   return (
     <Card className={className}>
