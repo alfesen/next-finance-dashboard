@@ -22,7 +22,7 @@ const expenseSchema = z.object({
   category: z.string(),
 })
 
-const AddOutcome = ({ className }: { className: string }) => {
+const AddOutcome = () => {
   const { form, onSubmit } = usePostData(
     expenseSchema,
     {
@@ -34,7 +34,7 @@ const AddOutcome = ({ className }: { className: string }) => {
   )
 
   return (
-    <Card className={className}>
+    <Card className='width=[350]'>
       <CardHeader>
         <CardTitle className='uppercase'>Add Outcome</CardTitle>
       </CardHeader>
