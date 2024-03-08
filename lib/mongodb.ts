@@ -1,6 +1,6 @@
 // mongodb.js
 
-import type { ConnectOptions } from 'mongodb'
+import type { ConnectOptions, MongoClientOptions, MongoOptions } from 'mongodb'
 import { MongoClient } from 'mongodb'
 
 const dbURI: string | undefined = process.env.MONGODB_URI
