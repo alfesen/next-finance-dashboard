@@ -2,17 +2,12 @@ import { useId } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import CustomSelect from '@/components/customui/CustomSelect'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import CustomSelect from '@/components/customui/custom-select.component'
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import { z } from 'zod'
-import { usePostData } from '@/hooks/usePostData'
+import { usePostData } from '@/hooks/use-post-data.hook'
+import CustomFormFieldInput from '../customui/custom-form-field-input.component'
 
 const categories: string[] = ['Bank Transaction', 'Cash', 'Gift']
 
@@ -45,49 +40,17 @@ const AddIncome = ({ className }: { className: string }) => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
             <div className='flex gap-2'>
-              <FormField
+              <CustomFormFieldInput
                 control={form.control}
                 name='invoice'
-                render={({ field }) => {
-                  return (
-                    <FormItem className='input-box'>
-                      <Label htmlFor={incomeInvoiceId} className='input-label'>
-                        Invoice
-                      </Label>
-                      <FormControl>
-                        <Input
-                          required
-                          id={incomeInvoiceId}
-                          {...field}
-                          placeholder='Enter Invoices'
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )
-                }}
+                label='Invoice'
+                placeholder='Enter invoice description'
               />
-              <FormField
+              <CustomFormFieldInput
                 control={form.control}
                 name='amount'
-                render={({ field }) => {
-                  return (
-                    <FormItem className='input-box'>
-                      <Label htmlFor={incomeAmountId} className='input-label'>
-                        Amount
-                      </Label>
-                      <FormControl>
-                        <Input
-                          required
-                          id={incomeAmountId}
-                          type='number'
-                          placeholder='Enter Amount'
-                          className='number-input'
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )
-                }}
+                label='Amount'
+                placeholder='Enter amount'
               />
             </div>
             <FormField
