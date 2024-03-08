@@ -17,9 +17,7 @@ const IncomeEntries = ({ entries }: { entries: any }) => {
         <TableRow key={nanoid()}>
           <TableCell className='font-medium capitalize'>{invoice}</TableCell>
           <TableCell>{method}</TableCell>
-          <TableCell className='text-right'>
-            {amount} {currency}
-          </TableCell>
+          <TableCell className='text-right'>{amount} PLN</TableCell>
         </TableRow>
       )
     })
