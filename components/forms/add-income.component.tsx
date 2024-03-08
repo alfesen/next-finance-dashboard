@@ -27,7 +27,7 @@ const AddIncome = ({ className }: { className: string }) => {
     incomeSchema,
     {
       invoice: '',
-      amount: 0,
+      amount: '',
       method: '',
     },
     'income'
@@ -110,7 +110,6 @@ const AddIncome = ({ className }: { className: string }) => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className='flex justify-end'></CardFooter>
     </Card>
   )
 }
