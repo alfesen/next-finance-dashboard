@@ -10,10 +10,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import CustomSelect from '@/components/customui/CustomSelect'
+import { Form, FormField, FormItem } from '../ui/form'
+import { usePostData } from '@/hooks/usePostData'
+import { z } from 'zod'
 
 const outcomeCategories: Record<string, string[]>[] = [
   { children: ['Kids', 'Pets'] },
-  { food: ['Coffee', 'Eating Out', 'Eating In', 'Eating at Work'] },
+  { food: ['Coffee', 'Groceries', 'Eating Out', 'Eating at Work'] },
   { home: ['Furnishing', 'Repairs'] },
   { health: ['Doctors', 'Medicines', 'Health Tests'] },
   { labor: ['Learning', 'Work'] },
@@ -21,7 +24,23 @@ const outcomeCategories: Record<string, string[]>[] = [
   { other: ['Charity', 'Gifts', 'Pocket money', 'Other'] },
 ]
 
+const expenseSchema = z.object({
+  expense: z.string(),
+  amount: z.string().transform(Number),
+  category: z.string(),
+})
+
 const AddOutcome = ({ className }: { className: string }) => {
+  const { form, onSubmit } = usePostData(
+    expenseSchema,
+    {
+      expense: '',
+      amount: '',
+      category: '',
+    },
+    'outcome'
+  )
+
   const outcomeDescriptionId = useId()
   const outcomeAmountId = useId()
 
@@ -31,40 +50,73 @@ const AddOutcome = ({ className }: { className: string }) => {
         <CardTitle className='uppercase'>Add Outcome</CardTitle>
       </CardHeader>
       <CardContent>
-        <form className='add-form'>
-          <div className='flex gap-2'>
-            <div className='input-box'>
-              <Label htmlFor={outcomeDescriptionId} className='input-label'>
-                Outcome Description
-              </Label>
-              <Input
-                id={outcomeDescriptionId}
-                placeholder='Enter Descriptions'
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <div className='flex gap-2'>
+              <FormField
+                name='expense'
+                control={form.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem className='input-box'>
+                      <Label
+                        htmlFor={outcomeDescriptionId}
+                        className='input-label'
+                      >
+                        Outcome Description
+                      </Label>
+                      <Input
+                        required
+                        {...field}
+                        id={outcomeDescriptionId}
+                        placeholder='Enter Descriptions'
+                      />
+                    </FormItem>
+                  )
+                }}
+              />
+              <FormField
+                name='amount'
+                control={form.control}
+                render={({ field }) => {
+                  return (
+                    <FormItem className='input-box'>
+                      <Label htmlFor={outcomeAmountId} className='input-label'>
+                        Amount
+                      </Label>
+                      <Input
+                        required
+                        id={outcomeAmountId}
+                        type='number'
+                        {...field}
+                        placeholder='Enter Amount'
+                        className='number-input'
+                      />
+                    </FormItem>
+                  )
+                }}
               />
             </div>
-            <div className='input-box'>
-              <Label htmlFor={outcomeAmountId} className='input-label'>
-                Amount
-              </Label>
-              <Input
-                id={outcomeAmountId}
-                type='number'
-                placeholder='Enter Amount'
-                className='number-input'
-              />
-            </div>
-          </div>
-          <CustomSelect
-            items={outcomeCategories}
-            label='Category'
-            placeholder='Select category'
-            onChange={(value: string) => console.log(value)}
-          />
-        </form>
+            <FormField
+              control={form.control}
+              name='category'
+              render={({ field }) => {
+                return (
+                  <CustomSelect
+                    {...field}
+                    items={outcomeCategories}
+                    label='Category'
+                    placeholder='Select category'
+                  />
+                )
+              }}
+            />
+            <Button type='submit' variant='outline'>
+              Submit
+            </Button>
+          </form>
+        </Form>
       </CardContent>
-      <CardFooter className='flex justify-end'>
-        <Button variant='outline'>Submit</Button>
-      </CardFooter>
     </Card>
   )
 }
