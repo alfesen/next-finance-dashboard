@@ -4,7 +4,7 @@ import IncomeEntries from '@/components/lists/income-entries.component'
 const Income = ({ entries }: { entries: any }) => {
   return (
     <main className='container py-4 flex justify-between gap-10'>
-      <AddIncome className='width=[350]' />
+      <AddIncome />
       <IncomeEntries entries={entries} />
     </main>
   )

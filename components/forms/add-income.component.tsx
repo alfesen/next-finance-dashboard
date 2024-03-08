@@ -1,10 +1,7 @@
-import { useId } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import CustomSelect from '@/components/customui/custom-select.component'
-import { Form, FormControl, FormField, FormItem } from '../ui/form'
+import { Form, FormField } from '../ui/form'
 import { z } from 'zod'
 import { usePostData } from '@/hooks/use-post-data.hook'
 import CustomFormFieldInput from '../customui/custom-form-field-input.component'
@@ -17,7 +14,7 @@ const incomeSchema = z.object({
   method: z.string(),
 })
 
-const AddIncome = ({ className }: { className: string }) => {
+const AddIncome = () => {
   const { form, onSubmit } = usePostData(
     incomeSchema,
     {
@@ -28,11 +25,8 @@ const AddIncome = ({ className }: { className: string }) => {
     'income'
   )
 
-  const incomeInvoiceId = useId()
-  const incomeAmountId = useId()
-
   return (
-    <Card className={className}>
+    <Card className='width=[350]'>
       <CardHeader>
         <CardTitle className='uppercase'>Add income</CardTitle>
       </CardHeader>
